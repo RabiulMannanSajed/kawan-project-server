@@ -8,7 +8,6 @@ app.use(cors());
 
 app.get('/', (req: Request, res: Response) => {
   const a = 7;
-  // change the file here
   res.send(a);
 });
 export default app;
