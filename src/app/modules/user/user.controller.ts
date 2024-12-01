@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express';
 import { UserServices } from './user.service';
 import catchAsync from '../../utils/catchAcync';
-import config from '../../config';
 
 const createUser: RequestHandler = async (req, res, next) => {
   try {
@@ -27,7 +26,19 @@ const getAllUser = catchAsync(async (req, res) => {
 
   res.send(result);
 });
+
+const updateUser = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  console.log('Headers:', req.headers);
+  console.log('Parsed Body:', req.body);
+  const result = await UserServices.updateUserIntoDB(id, req.body);
+
+  res.send(result);
+});
+
 export const UserControllers = {
   createUser,
   getAllUser,
+  updateUser,
 };
