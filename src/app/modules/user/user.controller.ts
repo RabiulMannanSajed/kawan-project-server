@@ -29,9 +29,6 @@ const getAllUser = catchAsync(async (req, res) => {
 
 const updateUser = catchAsync(async (req, res) => {
   const { id } = req.params;
-
-  console.log('Headers:', req.headers);
-  console.log('Parsed Body:', req.body);
   const result = await UserServices.updateUserIntoDB(id, req.body);
 
   res.send(result);

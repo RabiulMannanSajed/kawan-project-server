@@ -10,11 +10,13 @@ const getAllUserFromDB = async () => {
   return result;
 };
 const updateUserIntoDB = async (id: string, payload: Partial<TUser>) => {
-  console.log('payload', payload);
-  const result = await User.findByIdAndUpdate(id, payload, {
+  if (payload.hight && typeof payload.hight !== 'string') {
+    throw new Error('Hight must be a string.');
+  }
+  console.log(payload.hight);
+  const result = await User.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
-  console.log('result', result);
   return result;
 };
 
