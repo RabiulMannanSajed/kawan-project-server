@@ -48,7 +48,7 @@ const UserSchema = new Schema<TUser>(
   },
 );
 
-//  this will convert the hight into cm
+//  this will convert the hight into m
 // Pre-findOneAndUpdate middleware for updates
 UserSchema.pre('findOneAndUpdate', async function (next) {
   const update = this.getUpdate();
@@ -68,8 +68,8 @@ UserSchema.pre('findOneAndUpdate', async function (next) {
       feet = parseFloat(hightValue) || 0;
     }
 
-    const cm = feet * 30.48 + inches * 2.54; // Conversion logic
-    update.hight = `${cm.toFixed(2)} cm`; // Update the height in cm
+    const m = feet * 0.3048 + inches * 0.0254; // Conversion logic in m
+    update.hight = `${m.toFixed(2)} `; // Update the height in cm
 
     this.setUpdate(update); // Apply the updated value
   }

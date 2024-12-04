@@ -7,7 +7,7 @@ type TEBook = {
   quickSummery: string;
   aboutAuthor: string;
   audio?: File;
-  book: File;
+  book?: File;
   publishDate: string;
   language: string;
 };
