@@ -48,7 +48,7 @@ const UserSchema = new Schema<TUser>(
   },
 );
 
-//  this will convert the hight into m
+//*  this will convert the hight into m
 // Pre-findOneAndUpdate middleware for updates
 UserSchema.pre('findOneAndUpdate', async function (next) {
   const update = this.getUpdate();
@@ -59,17 +59,15 @@ UserSchema.pre('findOneAndUpdate', async function (next) {
     let inches = 0;
 
     if (hightValue.includes('.')) {
-      // Split into feet and inches if a dot is present
       [feet, inches = 0] = hightValue
         .split('.')
         .map((val) => parseFloat(val.trim()) || 0);
     } else {
-      // Treat the value as feet only if no dot is present
       feet = parseFloat(hightValue) || 0;
     }
 
     const m = feet * 0.3048 + inches * 0.0254; // Conversion logic in m
-    update.hight = `${m.toFixed(2)} `; // Update the height in cm
+    update.hight = `${m.toFixed(2)} `; // Update the height in m
 
     this.setUpdate(update); // Apply the updated value
   }

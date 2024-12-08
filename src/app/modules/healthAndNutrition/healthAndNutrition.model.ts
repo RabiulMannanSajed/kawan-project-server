@@ -14,7 +14,9 @@ const healthySchema = new Schema<THealth>(
     BMI: {
       type: String,
     },
-
+    suggestion: {
+      type: String,
+    },
     fitnessLevel: {
       type: String,
       enum: ['stay-healthy', 'gain-weight', 'lose-wight'],
@@ -29,7 +31,7 @@ const healthySchema = new Schema<THealth>(
 // Pre save hook to calculate BMI
 healthySchema.pre('save', async function (next) {
   if (!this.user) {
-    return next(new Error('User is required'));
+    throw new Error('User is required');
   }
 
   try {
@@ -37,13 +39,12 @@ healthySchema.pre('save', async function (next) {
     const user = await User.findById(this.user);
 
     if (!user || !user.hight || !user.weight) {
-      return next(new Error('User height or weight is missing'));
+      throw new Error('User height or weight is missing');
     }
-    const bmi = user.weight / (user.hight * 2);
+    const bmi = user.weight / (user.hight * 2); // number
     const BMICalculation = bmi.toFixed(2);
-    const BMI = BMICalculation.toString();
+    const BMI = BMICalculation.toString(); //convert in string
 
-    // const healthData = await Health.
     this.BMI = BMI;
     // Proceed with the save operation
     next();

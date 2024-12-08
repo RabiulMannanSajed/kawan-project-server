@@ -7,7 +7,7 @@ const createHealth: RequestHandler = async (req, res, next) => {
     console.log(result);
     res.status(200).json({
       success: true,
-      message: 'user is created successfully',
+      message: 'Health is created successfully',
       data: result,
     });
   } catch (error: any) {
@@ -20,7 +20,7 @@ const getAllHealth: RequestHandler = async (req, res, next) => {
     const result = await HealthServices.getAllHealthFromDB();
     res.status(200).json({
       success: true,
-      message: 'user is created successfully',
+      message: 'health is get successfully',
       data: result,
     });
   } catch (error: any) {
@@ -28,7 +28,36 @@ const getAllHealth: RequestHandler = async (req, res, next) => {
   }
 };
 
+const getSingleHealth: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await HealthServices.getSingleHealthFormDB(id);
+    res.status(200).json({
+      success: true,
+      message: `this id:${id} of the get successfully`,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const updateHealth: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await HealthServices.updateHealthIntoDB(id, req.body);
+    res.status(200).json({
+      success: true,
+      message: `this id:${id} of the get successfully`,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const HealthController = {
   createHealth,
   getAllHealth,
+  getSingleHealth,
+  updateHealth,
 };
